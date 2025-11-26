@@ -56,4 +56,4 @@ jobs:
         with:
           app-name: 'phpapp'
           slot-name: 'Production'
-          package: .
+          package: ./public
