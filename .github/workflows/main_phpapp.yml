@@ -29,9 +29,10 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: php-app
-          path: |
-            **
-            .*
+          path: .
+          exclude: |
+            vendor/      # optional, but better to keep vendor included
+            node_modules/
 
 
   deploy:
@@ -50,13 +51,13 @@ jobs:
       - name: Login to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_CBB748A0D1504C0FB1066B37BF1BD28F }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_334905ADE0DA4787A0FD65E99E187EBF }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_0589211FEDDE4516883100B602590DD9 }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID }}
 
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
         with:
           app-name: 'phpapp'
           slot-name: 'Production'
-          package: ./public
+          package: .
